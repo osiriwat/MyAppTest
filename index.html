@@ -1,96 +1,48 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login</title>
 
-    <title> Decimal</title>
+	<script>
+		var app = {
+		sendSms: function() {
+			var number = document.getElementById('numberTxt').value.toString(); /* iOS: ensure number is actually a string */
+			var message = document.getElementById('messageTxt').value;
+			console.log("number=" + number + ", message= " + message);
 
-    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+			//CONFIGURATION
+			var options = {
+				replaceLineBreaks: false, // true to replace \n by a new line, false by default
+				android: {
+					intent: 'INTENT'  // send SMS with the native android SMS messaging
+					//intent: '' // send SMS without open any other app
+				}
+			};
 
-    <!-- Mobiscroll JS and CSS Includes -->
-    <link rel="stylesheet" href="css/mobiscroll.jquery.min.css">
-    <script src="js/mobiscroll.jquery.min.js"></script>
-
-    <style type="text/css">
-    body {
-        margin: 0;
-        padding: 0;
-    }
-
-    button {
-        display: inline-block;
-        margin: 5px 5px 0 0;
-        padding: 10px 30px;
-        outline: 0;
-        border: 0;
-        cursor: pointer;
-        background: #5185a8;
-        color: #fff;
-        text-decoration: none;
-        font-family: arial, verdana, sans-serif;
-        font-size: 14px;
-        font-weight: 100;
-    }
-
-    input {
-        width: 100%;
-        margin: 0 0 5px 0;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 0;
-        font-family: arial, verdana, sans-serif;
-        font-size: 14px;
-        box-sizing: border-box;
-        -webkit-appearance: none;
-    }
-
-    .mbsc-page {
-        padding: 1em;
-    }
-
-    </style>
-
+			var success = function () { alert('Message sent successfully'); };
+			var error = function (e) { alert('Message Failed:' + e); };
+			sms.send(number, message, options, success, error);
+			}
+		};
+	</script>
 </head>
 <body>
-
-<div mbsc-page class="demo-decimal">
-    <input id="demo" placeholder="Please Select ..." />
-
-    <button id="clear">Clear</button>
-    <button id="show">Show</button>
-    
-</div>
-
-<script>
-    mobiscroll.settings = {
-        theme: 'ios',
-        lang: 'th'
-    };
-
-    $(function () {
-    
-        // Mobiscroll Numpad initialization
-        $('#demo').mobiscroll().numpad({
-            theme: 'ios',      // Specify theme like: theme: 'ios' or omit setting to use default
-            lang: 'th',        // Specify language like: lang: 'pl' or omit setting to use default
-            min: 1,
-            scale: 2,
-            preset: 'decimal'  // More info about preset: https://docs.mobiscroll.com/4-4-2/numpad#opt-preset
-        });
-        
-        $('#show').click(function () {
-            $('#demo').mobiscroll('show');
-            return false;
-        });
-    
-        $('#clear').click(function () {
-            $('#demo').mobiscroll('clear');
-            return false;
-        });
-        
-    });
-</script>
-
+    <div data-role="page">
+        <div data-role="header">
+            <h1>Login</h1>
+        </div>
+        <div role="main" class="ui-content">
+            <div ng-app="user" ng-controller="userController">
+                <input id="numberTxt" placeholder="Enter mobile number" value="" type="tel" /> <br>
+				<textarea id="messageTxt" placeholder="Enter message"></textarea><br>
+				<input type="button" onclick="app.sendSms()" value="Send SMS" />
+            </div>
+        </div>
+        <div data-role="footer">
+            <h4></h4>
+        </div>
+    </div>
 </body>
 </html>
